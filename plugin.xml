@@ -2,7 +2,7 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="onesignal-cordova-plugin"
-    version="2.11.1-OS2">
+    version="2.11.1-OS3">
 
   <name>OneSignal Push Notifications</name>
   <author>Josh Kasten, Bradley Hesse, Rodrigo Gomez-Palacio</author>
@@ -37,6 +37,7 @@
     <!-- PhoneGap Build (PGB) does not have a amazon build target so it include the required manifest entries in all Android builds. -->
     <config-file target="AndroidManifest.xml" parent="/manifest">
       <uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE" />
+      <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
       <permission android:name="$PACKAGE_NAME.permission.RECEIVE_ADM_MESSAGE" android:protectionLevel="signature" />
       <uses-permission android:name="$PACKAGE_NAME.permission.RECEIVE_ADM_MESSAGE" />
     </config-file>

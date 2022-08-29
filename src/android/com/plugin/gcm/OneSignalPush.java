@@ -27,46 +27,29 @@
 
 package com.plugin.gcm;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
+
+import com.onesignal.OSEmailSubscriptionObserver;
+import com.onesignal.OSInAppMessageAction;
+import com.onesignal.OSNotification;
+import com.onesignal.OSNotificationOpenResult;
+import com.onesignal.OSPermissionObserver;
+import com.onesignal.OSSubscriptionObserver;
+import com.onesignal.OneSignal;
+import com.onesignal.OneSignal.InAppMessageClickHandler;
+import com.onesignal.OneSignal.NotificationOpenedHandler;
+import com.onesignal.OneSignal.NotificationReceivedHandler;
+
 import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.PluginResult;
+import org.apache.cordova.PermissionHelper;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.HashMap;
-
-import com.onesignal.OneSignal;
-import com.onesignal.OSNotification;
-import com.onesignal.OSNotificationOpenResult;
-import com.onesignal.OSInAppMessageAction;
-import com.onesignal.OneSignal.NotificationOpenedHandler;
-import com.onesignal.OneSignal.NotificationReceivedHandler;
-import com.onesignal.OneSignal.InAppMessageClickHandler;
-import com.onesignal.OneSignal.GetTagsHandler;
-import com.onesignal.OneSignal.IdsAvailableHandler;
-import com.onesignal.OneSignal.PostNotificationResponseHandler;
-import com.onesignal.OneSignal.EmailUpdateHandler;
-import com.onesignal.OneSignal.EmailUpdateError;
-
-import com.onesignal.OSPermissionObserver;
-import com.onesignal.OSEmailSubscriptionObserver;
-import com.onesignal.OSSubscriptionObserver;
-import com.onesignal.OSPermissionStateChanges;
-import com.onesignal.OSSubscriptionStateChanges;
-import com.onesignal.OSEmailSubscriptionStateChanges;
-
 public class OneSignalPush extends CordovaPlugin {
   private static final String TAG = "OneSignalPush";
+  private static final Integer NOTIFICATION_PERMISSIONS_REQUEST_CODE = 1000;
 
   private static final String SET_NOTIFICATION_RECEIVED_HANDLER = "setNotificationReceivedHandler";
   private static final String SET_NOTIFICATION_OPENED_HANDLER = "setNotificationOpenedHandler";
@@ -164,6 +147,13 @@ public class OneSignalPush extends CordovaPlugin {
               appId,
               new CordovaNotificationOpenedHandler(notifOpenedCallbackContext),
               new CordovaNotificationReceivedHandler(notifReceivedCallbackContext)
+      );
+
+
+      PermissionHelper.requestPermission(
+              this,
+              NOTIFICATION_PERMISSIONS_REQUEST_CODE,
+              "android.permission.POST_NOTIFICATIONS"
       );
 
       // data.getJSONObject(2) is for iOS settings.

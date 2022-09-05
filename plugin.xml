@@ -89,10 +89,28 @@
       <string>production</string>
     </config-file>
 
-    <framework src="OneSignal" type="podspec" spec="2.15.2" />
+    <config-file target="*-Debug.plist" parent="com.apple.security.application-groups">
+      <array>
+        <string>group.com.outsystems.rd.mobileeco.onesignal.onesignal</string>
+      </array>
+    </config-file>
+    <config-file target="*-Release.plist" parent="com.apple.security.application-groups">
+      <array>
+        <string>group.com.outsystems.rd.mobileeco.onesignal.onesignal</string>
+      </array>
+    </config-file>
+
     <header-file src="src/ios/OneSignalPush.h" />
     <source-file src="src/ios/OneSignalPush.m" />
 
+    <podspec>
+        <config>
+            <source url="https://cdn.cocoapods.org/"/>
+        </config>
+        <pods use-frameworks="true">
+            <pod name="OneSignal" spec="2.15.2" />
+        </pods>
+    </podspec>
   </platform>
 
   <!-- Windows Phone 8.1 -->

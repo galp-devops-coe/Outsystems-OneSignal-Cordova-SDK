@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.11.1-OS4]
 ### Fixes
 - Change OneSignal-Android-SDK to point to newer version 3.15.5-OS2 [RNMT-1495](https://outsystemsrd.atlassian.net/browse/RNMT-1495)
 

@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Feat
+
+## [2.11.1-OS6]
+### Features
 - Replaces dependency to Jitpack with dependency to Azure repo [RNMT-2036](https://outsystemsrd.atlassian.net/browse/RNMT-2124)
 
 ## [2.11.1-OS5]

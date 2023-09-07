@@ -27,6 +27,7 @@
 
 package com.plugin.gcm;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.onesignal.OSEmailSubscriptionObserver;
@@ -330,6 +331,10 @@ public class OneSignalPush extends CordovaPlugin {
           result = OneSignalOutcomeController.sendOutcomeWithValue(callbackContext, data);
           break;
 
+        case "ready":
+          //do nothing for now
+          break;
+
         default:
           Log.e(TAG, "Invalid action : " + action);
           CallbackHelper.callbackError(callbackContext, "Invalid action : " + action);
@@ -377,12 +382,29 @@ public class OneSignalPush extends CordovaPlugin {
     @Override
     public void notificationOpened(OSNotificationOpenResult result) {
       try {
-        CallbackHelper.callbackSuccess(jsNotificationOpenedCallBack, new JSONObject(result.stringify()));
+        //CallbackHelper.callbackSuccess(jsNotificationOpenedCallBack, new JSONObject(result.stringify()));
+
+        // OneSignalPluginNewEvents - here we should use the fireEvent instead of callbackSuccess
+
+        String resultInString = result.stringify();
+        String js = "window.plugins.OneSignal.fireEvent(" +
+                "\"" + "notificationClick" + "\"," + resultInString + ");";
+
+        triggerEvent(js);
+
       }
       catch (Throwable t) {
         t.printStackTrace();
       }
     }
+  }
+
+  private void triggerEvent(String js) {
+    if (this.webView == null) {
+      return;
+    }
+    Activity viewActivity = (Activity) this.webView.getContext();
+    viewActivity.runOnUiThread(() -> this.webView.loadUrl("javascript:" + js));
   }
 
   private class CordovaInAppMessageClickHandler implements InAppMessageClickHandler {

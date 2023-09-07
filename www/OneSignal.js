@@ -400,6 +400,143 @@ OneSignal.prototype.sendOutcomeWithValue = function(name, value, callback) {
 
 //-------------------------------------------------------------------
 
+// Event listener
+OneSignal.prototype._listener = {};
+
+/**
+ * Register callback for given event.
+ *
+ * @param [ String ]   event    The name of the event.
+ * @param [ Function ] callback The function to be exec as callback.
+ *
+ * @return [ Void ]
+ */
+ OneSignal.prototype.on = function (event, callback) {
+    console.log("Entered OneSignal.on");
+
+    var type = typeof callback;
+
+    if (type !== 'function' && type !== 'string')
+        return;
+
+    console.log("Before trying to get event");
+    if (!this._listener[event]) {
+        this._listener[event] = [];
+    }
+    console.log("After trying to get event");
+
+    var item = [callback, window];
+
+    this._listener[event].push(item);
+};
+
+/**
+ * Unregister callback for given event.
+ *
+ * @param [ String ]   event    The name of the event.
+ * @param [ Function ] callback The function to be exec as callback.
+ *
+ * @return [ Void ]
+ */
+ OneSignal.prototype.un = function (event, callback) {
+    var listener = this._listener[event];
+
+    if (!listener)
+        return;
+
+    for (var i = 0; i < listener.length; i++) {
+        var fn = listener[i][0];
+
+        if (fn == callback) {
+            listener.splice(i, 1);
+            break;
+        }
+    }
+};
+
+/**
+ * Create a callback function to get executed within a specific scope.
+ *
+ * @param [ Function ] fn    The function to be exec as the callback.
+ * @param [ Object ]   scope The callback function's scope.
+ *
+ * @return [ Function ]
+ */
+OneSignal.prototype._createCallbackFn = function (fn, scope) {
+
+    if (typeof fn != 'function')
+        return;
+
+    return function () {
+        fn.apply(scope || this, arguments);
+    };
+};
+
+/**
+ * Execute the native counterpart.
+ *
+ * @param [ String ]  action   The name of the action.
+ * @param [ Array ]   args     Array of arguments.
+ * @param [ Function] callback The callback function.
+ * @param [ Object ] scope     The scope for the function.
+ *
+ * @return [ Void ]
+ */
+OneSignal.prototype._exec = function (action, args, callback, scope) {
+    var fn     = this._createCallbackFn(callback, scope),
+        params = [];
+
+    if (Array.isArray(args)) {
+        params = args;
+    } else if (args !== null) {
+        params.push(args);
+    }
+
+    cordova.exec(fn, null, 'OneSignalPush', action, params);
+};
+
+/**
+ * Fire queued events once the device is ready and all listeners are registered.
+ *
+ * @return [ Void ]
+ */
+OneSignal.prototype.fireQueuedEvents = function() {
+    OneSignal.prototype._exec('ready');
+};
+
+/**
+ * Fire the event with given arguments.
+ *
+ * @param [ String ] event The event's name.
+ * @param [ *Array]  args  The callback's arguments.
+ *
+ * @return [ Void]
+ */
+ OneSignal.prototype.fireEvent = function (event) {
+    var args     = Array.apply(null, arguments).slice(1),
+        listener = this._listener[event];
+
+    if (!listener)
+        return;
+
+    if (args[0] && typeof args[0].data === 'string') {
+        args[0].data = JSON.parse(args[0].data);
+    }
+
+    for (var i = 0; i < listener.length; i++) {
+        var fn    = listener[i][0],
+            scope = listener[i][1];
+
+        if (typeof fn !== 'function') {
+            fn = scope[fn];
+        }
+
+        fn.apply(scope, args);
+    }
+};
+
+//-------------------------------------------------------------------
+
 if(!window.plugins)
     window.plugins = {};
 

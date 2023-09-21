@@ -363,7 +363,15 @@ public class OneSignalPush extends CordovaPlugin {
     @Override
     public void notificationReceived(OSNotification notification) {
       try {
-        CallbackHelper.callbackSuccess(jsNotificationReceivedCallBack, new JSONObject(notification.stringify()));
+        //CallbackHelper.callbackSuccess(jsNotificationReceivedCallBack, new JSONObject(notification.stringify()));
+
+        // OneSignalPluginNewEvents - here we should use the fireEvent instead of callbackSuccess
+
+        String resultInString = notification.stringify();
+        String js = "window.plugins.OneSignal.fireEvent(" +
+                "\"" + "defaultNotification" + "\"," + resultInString + ");";
+
+        triggerEvent(js);
       }
       catch (Throwable t) {
         t.printStackTrace();
@@ -391,7 +399,6 @@ public class OneSignalPush extends CordovaPlugin {
                 "\"" + "notificationClick" + "\"," + resultInString + ");";
 
         triggerEvent(js);
-
       }
       catch (Throwable t) {
         t.printStackTrace();

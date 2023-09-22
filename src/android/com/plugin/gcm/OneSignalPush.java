@@ -369,7 +369,7 @@ public class OneSignalPush extends CordovaPlugin {
 
         String resultInString = notification.stringify();
         String js = "window.plugins.OneSignal.fireEvent(" +
-                "\"" + "defaultNotification" + "\"," + resultInString + ");";
+                "\"" + "notificationReceived" + "\"," + resultInString + ");";
 
         triggerEvent(js);
       }
@@ -396,7 +396,7 @@ public class OneSignalPush extends CordovaPlugin {
 
         String resultInString = result.stringify();
         String js = "window.plugins.OneSignal.fireEvent(" +
-                "\"" + "notificationClick" + "\"," + resultInString + ");";
+                "\"" + "notificationOpened" + "\"," + resultInString + ");";
 
         triggerEvent(js);
       }

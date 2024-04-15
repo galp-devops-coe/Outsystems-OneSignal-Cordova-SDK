@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## 2.11.1-OS9
+
+### Features
+
+- Update iOS SDK to version `2.16.7+1.0.0`. This include the Privacy Manifest file (https://outsystemsrd.atlassian.net/browse/RMET-3276).
 
 ## [2.11.1-OS8]
 ### Changes
-- Chore: iOS | Use `podspec` element instead of it being a `framework` attribute.
+- iOS | Use `podspec` element instead of it being a `framework` attribute.
 
 ## [2.11.1-OS7]
 ### Features

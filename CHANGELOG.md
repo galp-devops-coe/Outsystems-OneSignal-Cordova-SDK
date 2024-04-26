@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Features
 
-- Update Android SDK to version `3.15.8-OS4`. This fix the issue (https://outsystemsrd.atlassian.net/browse/RPM-4691).
+- Update Android SDK to version `3.15.5-OS5`. This fix the issue (https://outsystemsrd.atlassian.net/browse/RPM-4691).
 
 ## 2.11.1-OS9
 

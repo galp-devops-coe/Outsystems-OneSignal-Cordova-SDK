@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## 2.11.2-OS10
+
+### Fixes
+
+- Update Android SDK to version `3.15.5-OS5`. This fix the issue (https://outsystemsrd.atlassian.net/browse/RPM-4691).
+
 ## 2.11.1-OS9
 
 ### Features

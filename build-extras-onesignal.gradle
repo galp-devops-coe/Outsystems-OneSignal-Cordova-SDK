@@ -57,13 +57,13 @@ configurations.all { resolutionStrategy {
 }}
 
 dependencies {
-    implementation("com.github.outsystems:onesignal-android-sdk:3.15.5-OS5@aar")
+    implementation("com.github.galp-devops-coe:onesignal-android-sdk:3.15.5-OS5@aar")
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     implementation 'com.google.android.gms:play-services-base:18.2.0'
     implementation 'com.google.android.gms:play-services-basement:18.2.0'
     implementation 'com.google.android.gms:play-services-tasks:18.0.2'
     implementation 'com.google.android.gms:play-services-stats:17.0.3'
-    api 'com.google.firebase:firebase-messaging:20.2.1'
+    api 'com.google.firebase:firebase-messaging:23.4.1'
     implementation 'androidx.cardview:cardview:1.0.0'
 }
